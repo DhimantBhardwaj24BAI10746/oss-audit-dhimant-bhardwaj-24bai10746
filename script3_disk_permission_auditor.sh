@@ -1,29 +1,32 @@
 #!/bin/bash
-# Script 3: Disk and Permission Auditor
+# Disk and Permission Auditor
 # Author: Dhimant Bhardwaj
-# Audits key directories and checks Git config file location
+# Course Project: Open Source Software Audit
 
+# List of important Linux directories to check
 CHECK_DIRS=("/etc" "/var/log" "/home" "/usr/bin" "/tmp")
 
-echo "**********************************************"
-echo " Disk and Permission Auditor"
-echo "**********************************************"
+echo "=================================================="
+echo "         Disk and Permission Audit Report"
+echo "=================================================="
 
+# Loop through each directory and display permissions + size
 for ITEM in "${CHECK_DIRS[@]}"; do
     if [ -d "$ITEM" ]; then
         DETAILS=$(ls -ld "$ITEM" | awk '{print $1, $3, $4}')
         USAGE=$(du -sh "$ITEM" 2>/dev/null | cut -f1)
-        echo "$ITEM => $DETAILS | Size Used: $USAGE"
+        echo "$ITEM => Permissions: $DETAILS | Size: $USAGE"
     else
-        echo "$ITEM is missing on this system"
+        echo "$ITEM does not exist on this system."
     fi
 done
 
 echo ""
-echo "**********************************************"
-echo " Git Configuration Check"
-echo "**********************************************"
+echo "=================================================="
+echo "             Git Configuration Check"
+echo "=================================================="
 
+# Check Git configuration file in user's home directory
 GIT_CONFIG="$HOME/.gitconfig"
 
 if [ -f "$GIT_CONFIG" ]; then
@@ -31,5 +34,6 @@ if [ -f "$GIT_CONFIG" ]; then
     echo "$GIT_CONFIG exists."
     echo "Permissions: $CONFIG_INFO"
 else
-    echo "$GIT_CONFIG not found. Git may not be configured for this user yet."
+    echo "$GIT_CONFIG not found."
+    echo "Git may not be configured for this user yet."
 fi
