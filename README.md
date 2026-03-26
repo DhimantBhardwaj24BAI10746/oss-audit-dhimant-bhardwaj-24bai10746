@@ -43,7 +43,6 @@ chmod +x *.sh
 
 Run the scripts:
 
-```bash
 ./script1_system_identity.sh
 ./script2_package_inspector.sh
 ./script3_disk_permission_auditor.sh
